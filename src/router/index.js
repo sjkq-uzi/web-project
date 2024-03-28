@@ -4,7 +4,7 @@ const routerHistory = createWebHashHistory();
 const routes = [
   {
     path: "/",
-    redirect: "/menu",
+    redirect: "/login",
   },
   {
     name: login,

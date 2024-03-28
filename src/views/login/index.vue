@@ -2,6 +2,7 @@
 import "animate.css";
 import { ref, reactive } from "vue";
 import forget from "./components/forget_password.vue";
+import { login, register } from "../../../api/login";
 const activeName = ref("first");
 //表单接口
 interface formData {
@@ -20,10 +21,16 @@ const registerData: formData = reactive({
   password: "",
   rePassword: "",
 });
+//子组件暴露的实例
 const forgetP = ref();
 const openDialog = () => {
+  //调用子组件的方法打开对话框
   forgetP.value.openForgetPasswordDialog();
-  console.log("123");
+};
+//注册
+const goRegister = async () => {
+  const res = await register(registerData);
+  console.log("res---", res);
 };
 </script>
 
@@ -93,7 +100,9 @@ const openDialog = () => {
                     ></el-input>
                   </el-form-item>
                   <div class="footer-register-button">
-                    <el-button type="primary">注册</el-button>
+                    <el-button type="primary" @click="goRegister"
+                      >注册</el-button
+                    >
                   </div>
                 </el-form>
               </el-tab-pane>
