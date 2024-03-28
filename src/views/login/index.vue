@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import "animate.css";
 import { ref, reactive } from "vue";
+import forget from "./components/forget_password.vue";
 const activeName = ref("first");
 //表单接口
 interface formData {
@@ -19,6 +20,11 @@ const registerData: formData = reactive({
   password: "",
   rePassword: "",
 });
+const forgetP = ref();
+const openDialog = () => {
+  forgetP.value.openForgetPasswordDialog();
+  console.log("123");
+};
 </script>
 
 <template>
@@ -53,7 +59,9 @@ const registerData: formData = reactive({
                   </el-form-item>
                   <div class="login-form-wrapped">
                     <div class="forget-password">
-                      <span class="forget-password-button">忘记密码</span>
+                      <span class="forget-password-button" @click="openDialog"
+                        >忘记密码</span
+                      >
                     </div>
                     <div class="login-form-wrapped-login">
                       <el-button type="primary">登录</el-button>
@@ -106,6 +114,7 @@ const registerData: formData = reactive({
       </el-footer>
     </el-container>
   </div>
+  <forget ref="forgetP" />
 </template>
 
 <style lang="scss" scoped>
