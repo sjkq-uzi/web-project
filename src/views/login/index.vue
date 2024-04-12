@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import "animate.css";
 import { ref, reactive } from "vue";
-import forget from "./components/forget_password.vue";
+import forget_password from "./components/forget_password.vue";
 import { login, register } from "../../../api/login";
+import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const activeName = ref("first");
 //表单接口
 interface formData {
@@ -27,10 +30,50 @@ const openDialog = () => {
   //调用子组件的方法打开对话框
   forgetP.value.openForgetPasswordDialog();
 };
+//登录
+const goLogin = async () => {
+  const res = await login(loginData);
+  console.log("res---", res);
+  const { token } = res.data;
+  ElMessage({
+    showClose: true,
+    message: res.data.message,
+    type: res.data.code === 201 ? "success" : "error",
+  });
+  //token存到浏览器缓存
+  localStorage.setItem("token", token);
+  //登录成功跳转到首页
+  res.data.code === 201 && router.push("/home");
+};
 //注册
 const goRegister = async () => {
-  const res = await register(registerData);
-  console.log("res---", res);
+  //判断俩次密码输入是否一致
+  if (registerData.password === registerData.rePassword) {
+    const res = await register(registerData);
+    console.log("res---", res);
+    if (res.data.code === 201) {
+      //注册成功
+      ElMessage({
+        showClose: true,
+        message: res.data.message,
+        type: "success",
+      });
+      activeName.value = "first";
+    } else if (res.data.code === 500) {
+      //注册失败,数据库报错
+      ElMessage.error(res.data.message);
+    } else if (res.data.code === 400) {
+      //账号或密码不能为空
+      ElMessage.warning(res.data.message);
+    } else if (res.data.code === 409) {
+      //账号已存在
+      ElMessage.warning(res.data.message);
+    } else {
+      ElMessage.error("注册账号失败");
+    }
+  } else {
+    ElMessage.error("两次密码输入不一致");
+  }
 };
 </script>
 
@@ -71,7 +114,9 @@ const goRegister = async () => {
                       >
                     </div>
                     <div class="login-form-wrapped-login">
-                      <el-button type="primary">登录</el-button>
+                      <el-button type="primary" @click="goLogin"
+                        >登录</el-button
+                      >
                     </div>
                     <div class="login-form-wrapped-register">
                       还没有账号?<span class="register-button">马上注册</span>
@@ -123,7 +168,7 @@ const goRegister = async () => {
       </el-footer>
     </el-container>
   </div>
-  <forget ref="forgetP" />
+  <forget_password ref="forgetP" />
 </template>
 
 <style lang="scss" scoped>
