@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, reactive, defineExpose } from "vue";
-
+import { resetPassword, verifyAccount } from "@/api/login";
+import { ElMessage } from "element-plus";
 // const dialogVisible = ref(false);
 
 interface forgetData {
@@ -23,10 +24,40 @@ const state = reactive({
 const openForgetPasswordDialog = () => {
   state.forgetPasswordDialog = true;
 };
-
-const openChangePassword = () => {
-  state.forgetPasswordDialog = false;
-  state.changePasswordDialog = true;
+//忘记密码=》验证邮箱账号
+const openChangePassword = async () => {
+  let res = await verifyAccount(forgetData);
+  if (res.data.status === 0) {
+    //验证成功
+    ElMessage({
+      showClose: true,
+      message: res.data.message,
+      type: "success",
+    });
+    //将id存到浏览器缓存
+    localStorage.setItem("id", res.data.id);
+    state.forgetPasswordDialog = false;
+    state.changePasswordDialog = true;
+  } else {
+    //验证失败
+    ElMessage({
+      showClose: true,
+      message: res.data.message,
+      type: "error",
+    });
+  }
+};
+//忘记密码 =》 验证邮箱账号 =》 确认修改密码
+const changePassword = async () => {
+  const id = localStorage.getItem("id");
+  if (forgetData.repassword === forgetData.password) {
+    let res = await resetPassword(id, forgetData.repassword);
+    ElMessage({
+      showClose: true,
+      message: res.data.message,
+      type: res.data.status === 0 ? "success" : "error",
+    });
+  }
 };
 //表单验规则
 const rules = reactive({
@@ -50,7 +81,12 @@ defineExpose({
     title="忘记密码"
     widtt="400px"
   >
-    <el-form class="login-form" label-position="top" :rules="rules">
+    <el-form
+      class="login-form"
+      label-position="top"
+      ref="ruleFormRef"
+      :rules="rules"
+    >
       <el-form-item label="输入您的注册账号" prop="account">
         <el-input v-model="forgetData.account" placeholder="输入您的注册账号" />
       </el-form-item>
@@ -75,11 +111,11 @@ defineExpose({
   >
     <el-form class="login-form" label-position="top" :rules="rules">
       <el-form-item label="输入您的新密码" prop="password">
-        <el-input v-model="forgetData.account" placeholder="输入您的新密码" />
+        <el-input v-model="forgetData.password" placeholder="输入您的新密码" />
       </el-form-item>
       <el-form-item label="请在此确认您的新密码" prop="repassword">
         <el-input
-          v-model="forgetData.email"
+          v-model="forgetData.repassword"
           placeholder="请在此确认您的新密码"
         />
       </el-form-item>
@@ -87,7 +123,7 @@ defineExpose({
     <template #footer>
       <div class="dialog-footer">
         <el-button @click="state.changePasswordDialog = false">取消</el-button>
-        <el-button type="primary"> 确定 </el-button>
+        <el-button @click="changePassword" type="primary"> 确定 </el-button>
       </div>
     </template>
   </el-dialog>

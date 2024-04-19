@@ -2,7 +2,7 @@
 import "animate.css";
 import { ref, reactive } from "vue";
 import forget_password from "./components/forget_password.vue";
-import { login, register } from "../../../api/login";
+import { login, register } from "@/api/login";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
 const router = useRouter();
@@ -105,6 +105,7 @@ const goRegister = async () => {
                     <el-input
                       v-model="loginData.password"
                       placeholder="请输入密码"
+                      show-password
                     />
                   </el-form-item>
                   <div class="login-form-wrapped">
