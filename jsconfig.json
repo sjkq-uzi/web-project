@@ -1,0 +1,16 @@
+{
+  "include": [
+    "src/**/*" // 包含 src 目录下的所有文件
+  ],
+  "exclude": [
+    "node_modules", // 排除 node_modules 目录
+    "**/*.spec.ts" // 排除所有的测试文件
+  ],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  // 其他配置...
+}

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, reactive, defineExpose } from "vue";
+import { ref, reactive } from "vue";
 import { resetPassword, verifyAccount } from "@/api/login";
 import { ElMessage } from "element-plus";
 // const dialogVisible = ref(false);
@@ -26,6 +26,7 @@ const openForgetPasswordDialog = () => {
 };
 //忘记密码=》验证邮箱账号
 const openChangePassword = async () => {
+  //验证邮箱账号是否匹配
   let res = await verifyAccount(forgetData);
   if (res.data.status === 0) {
     //验证成功
@@ -34,7 +35,7 @@ const openChangePassword = async () => {
       message: res.data.message,
       type: "success",
     });
-    //将id存到浏览器缓存
+    //将id存到浏览器本地缓存
     localStorage.setItem("id", res.data.id);
     state.forgetPasswordDialog = false;
     state.changePasswordDialog = true;
@@ -50,12 +51,20 @@ const openChangePassword = async () => {
 //忘记密码 =》 验证邮箱账号 =》 确认修改密码
 const changePassword = async () => {
   const id = localStorage.getItem("id");
+  //判断俩次密码输入是否一致
   if (forgetData.repassword === forgetData.password) {
-    let res = await resetPassword(id, forgetData.repassword);
+    //根据id重置密码
+    const res = await resetPassword(id, forgetData.repassword);
     ElMessage({
       showClose: true,
       message: res.data.message,
       type: res.data.status === 0 ? "success" : "error",
+    });
+  } else {
+    ElMessage({
+      showClose: true,
+      message: "两次输入的密码不一致",
+      type: "error",
     });
   }
 };
@@ -70,6 +79,7 @@ const rules = reactive({
     { required: true, message: "请确认您的新密码", trigger: "blur" },
   ],
 });
+//暴露打开弹窗的方法
 defineExpose({
   openForgetPasswordDialog,
 });

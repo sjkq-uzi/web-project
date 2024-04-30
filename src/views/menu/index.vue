@@ -2,16 +2,15 @@
 import { Menu as IconMenu } from "@element-plus/icons-vue";
 import { ref, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
+import { useUserInfo } from "@/store/userInfo";
+const userStore = useUserInfo();
 const router = useRouter();
-const state = reactive({
-  circleUrl:
-    "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
-});
+
 //退出登录
 const logOut = () => {
   router.replace("/login");
 };
-const { circleUrl } = toRefs(state);
+
 </script>
 
 <template>
@@ -25,7 +24,7 @@ const { circleUrl } = toRefs(state);
           background-color="#2b303b"
         >
           <div class="title">通用后台管理系统</div>
-          <el-menu-item index="1">
+          <el-menu-item index="home">
             <el-icon><House /></el-icon>
             <span>首页</span>
           </el-menu-item>
@@ -83,7 +82,7 @@ const { circleUrl } = toRefs(state);
             <el-icon><icon-menu /></el-icon>
             <span>登录日志</span>
           </el-menu-item>
-          <el-menu-item index="9">
+          <el-menu-item index="set">
             <el-icon><tools /></el-icon>
             <span>系统设置</span>
           </el-menu-item>
@@ -94,7 +93,7 @@ const { circleUrl } = toRefs(state);
           <span class="header-left-content">欢迎您的登录</span>
           <div class="header-right">
             <el-icon><Message /></el-icon>
-            <el-avatar :size="24" :src="circleUrl" />
+            <el-avatar :size="24" :src="userStore.imageUrl" />
             <el-dropdown>
               <span class="el-dropdown-link"> 设置 </span>
               <template #dropdown>
@@ -148,6 +147,10 @@ const { circleUrl } = toRefs(state);
     justify-content: space-between;
     align-items: center;
   }
+}
+.el-main {
+  --el-main-padding: 5px;
+  background-color: #f3f4fa;
 }
 .el-menu-item:hover {
   background: #006eff;

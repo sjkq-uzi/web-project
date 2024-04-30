@@ -5,6 +5,8 @@ import forget_password from "./components/forget_password.vue";
 import { login, register } from "@/api/login";
 import { ElMessage } from "element-plus";
 import { useRouter } from "vue-router";
+import { useUserInfo } from "@/store/userInfo";
+const store = useUserInfo();
 const router = useRouter();
 const activeName = ref("first");
 //表单接口
@@ -38,12 +40,18 @@ const goLogin = async () => {
   ElMessage({
     showClose: true,
     message: res.data.message,
-    type: res.data.code === 201 ? "success" : "error",
+    type: res.data.status === 0 ? "success" : "error",
   });
-  //token存到浏览器缓存
-  localStorage.setItem("token", token);
-  //登录成功跳转到首页
-  res.data.code === 201 && router.push("/home");
+  if (res.data.status === 0) {
+    //登录成功后获取id
+    const { id } = res.data.results;
+    //token存到浏览器缓存
+    localStorage.setItem("token", token);
+    //根据id获取用户信息
+    store.userInfo(id);
+    //登录成功跳转到首页
+    router.push("/home");
+  }
 };
 //注册
 const goRegister = async () => {
