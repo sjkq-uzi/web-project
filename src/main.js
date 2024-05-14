@@ -32,5 +32,6 @@ app.use(ElementPlus, { locale: zhCn });
 app.use(pinia);
 //注册全局组件
 app.component("vue-qrcode", VueQrcode);
+// app.config.globalProperties.$pinia = pinia;
 // 挂载app
 app.mount("#app");

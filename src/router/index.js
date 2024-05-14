@@ -26,6 +26,11 @@ const routes = [
         path: "/set",
         component: () => import("@/views/set/index.vue"),
       },
+      {
+        name: "templateManage",
+        path: "/templateManage",
+        component: () => import("@/views/templateManage/index.vue"),
+      },
     ],
   },
 ];

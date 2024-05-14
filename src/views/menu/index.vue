@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { Menu as IconMenu } from "@element-plus/icons-vue";
+//css动画库
+import "animate.css";
 import { ref, reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 import { useUserInfo } from "@/store/userInfo";
+import { Sunny, Moon } from "@element-plus/icons-vue";
 const userStore = useUserInfo();
 const router = useRouter();
-
+const switchStatus = ref(false);
 //退出登录
 const logOut = () => {
   router.replace("/login");
 };
-
 </script>
 
 <template>
@@ -23,7 +25,9 @@ const logOut = () => {
           text-color="#fff"
           background-color="#2b303b"
         >
-          <div class="title">通用后台管理系统</div>
+          <div class="title animate__animated animate__flash">
+            {{ userStore.name }}的博客
+          </div>
           <el-menu-item index="home">
             <el-icon><House /></el-icon>
             <span>首页</span>
@@ -49,19 +53,19 @@ const logOut = () => {
           <el-sub-menu index="4">
             <template #title>
               <el-icon><ShoppingBag /></el-icon>
-              <span>产品管理</span>
+              <span>设备管理</span>
             </template>
-            <el-menu-item-group title="入库管理">
-              <el-menu-item index="4-1">产品管理员</el-menu-item>
+            <el-menu-item-group title="模板管理">
+              <el-menu-item index="templateManage">模板管理</el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group title="出库管理">
-              <el-menu-item index="4-2">出库列表</el-menu-item>
+            <el-menu-item-group title="配置管理">
+              <el-menu-item index="4-2">配置管理</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <el-sub-menu index="5">
             <template #title>
-              <el-icon><ChatSquare /></el-icon>
-              <span>消息管理</span>
+              <el-icon><ChromeFilled /></el-icon>
+              <span>自动化测试</span>
             </template>
             <el-menu-item-group title="消息管理">
               <el-menu-item index="5-1">消息列表</el-menu-item>
@@ -70,10 +74,6 @@ const logOut = () => {
               <el-menu-item index="5-2">回收站</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
-          <el-menu-item index="6">
-            <el-icon><icon-menu /></el-icon>
-            <span>合同管理</span>
-          </el-menu-item>
           <el-menu-item index="7">
             <el-icon><icon-menu /></el-icon>
             <span>操作日志</span>
@@ -90,8 +90,16 @@ const logOut = () => {
       </el-aside>
       <el-container>
         <el-header>
-          <span class="header-left-content">欢迎您的登录</span>
+          <span
+            class="header-left-content animate__animated animate__bounceInDown"
+            >欢迎 {{ userStore.name }} 登录</span
+          >
           <div class="header-right">
+            <el-switch
+              v-model="switchStatus"
+              :active-icon="Sunny"
+              :inactive-icon="Moon"
+            />
             <el-icon><Message /></el-icon>
             <el-avatar :size="24" :src="userStore.imageUrl" />
             <el-dropdown>
@@ -142,7 +150,7 @@ const logOut = () => {
     font-size: 14px;
   }
   .header-right {
-    width: 140px;
+    width: 20%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -151,6 +159,7 @@ const logOut = () => {
 .el-main {
   --el-main-padding: 5px;
   background-color: #f3f4fa;
+  height: 500px;
 }
 .el-menu-item:hover {
   background: #006eff;

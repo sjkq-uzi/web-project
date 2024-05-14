@@ -5,11 +5,14 @@ import type { UploadProps } from "element-plus";
 import { ElMessage } from "element-plus";
 import { data } from "@/utils/data/systemSetData";
 import { useUserInfo } from "@/store/userInfo";
-import { bindAccount } from "@/api/userInfo";
+import {
+  bindAccount,
+  changeName,
+  changeGender,
+  changeEmail,
+} from "@/api/userInfo";
 import change from "./components/change_password.vue";
 const userStore = useUserInfo();
-console.log("userStore=", userStore);
-
 const item = ref([{ name: "系统设置", iconName: "location" }]);
 const activeName = ref("first");
 //上传头像成功后的回调
@@ -50,7 +53,7 @@ const beforeAvatarUpload: UploadProps["beforeUpload"] = (rawFile) => {
 };
 //系统设置页面展示的数据
 const arr = reactive(data);
-
+//个人信息展示，从store里中获取
 const dataArr = computed(() => {
   const res = arr;
   res.forEach((item, index) => {
@@ -60,13 +63,54 @@ const dataArr = computed(() => {
 });
 //子组件实例
 const changeP = ref();
-const onClick = (item) => {
+//个人信息管理遍历数据的类型
+interface itemData {
+  name: string;
+  id: string;
+  modelInfo: string;
+  hasInput: boolean;
+  hasSelect: boolean;
+  hasButton: boolean;
+  isDisabled: boolean;
+  buttonText: string;
+}
+//修改按钮点击事件
+const onClick = async (item: itemData) => {
+  const id = localStorage.getItem("id");
+  let dataConfig: any;
   switch (item.id) {
     case "Password":
-      console.log("---");
       changeP.value.openChangePasswordDialog();
       break;
+    case "name":
+      dataConfig = await changeName(id, item.modelInfo);
+      !dataConfig.data.status &&
+        userStore.$patch({
+          name: item.modelInfo,
+        });
+      break;
+    case "gender":
+      dataConfig = await changeGender(id, item.modelInfo);
+      !dataConfig.data.status &&
+        userStore.$patch({
+          gender: item.modelInfo,
+        });
+      break;
+    case "email":
+      dataConfig = await changeEmail(id, item.modelInfo);
+      !dataConfig.data.status &&
+        userStore.$patch({
+          email: item.modelInfo,
+        });
+    default:
+      break;
   }
+  ElMessage({
+    showClose: true,
+    message: dataConfig.data.message,
+    type: dataConfig.data.status === 0 ? "success" : "error",
+  });
+  console.log("dataConfig=", dataConfig);
 };
 </script>
 
@@ -114,8 +158,8 @@ const onClick = (item) => {
                 v-model="item.modelInfo"
                 placeholder="请选择你的性别"
               >
-                <el-option label="男" value="man" />
-                <el-option label="女" value="women" />
+                <el-option label="男" value="男" />
+                <el-option label="女" value="女" />
               </el-select>
               <el-button
                 v-if="item.hasButton"

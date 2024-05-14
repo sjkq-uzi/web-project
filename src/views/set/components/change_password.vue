@@ -2,6 +2,9 @@
 import { reactive } from "vue";
 import { changePassword } from "@/api/userInfo";
 import { ElMessage } from "element-plus";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const state = reactive({
   changePasswordDialog: false,
 });
@@ -25,8 +28,8 @@ const passwordData: passwordData = reactive({
 //修改密码
 const changeP = async () => {
   const id = localStorage.getItem("id");
-  //判断俩次密码输入是否一致
-  if (passwordData.oldPassword === passwordData.newPassword) {
+  //判断用户是否输入密码
+  if (passwordData.oldPassword && passwordData.newPassword) {
     //根据id重置密码
     const res = await changePassword(
       passwordData.oldPassword,
@@ -38,17 +41,21 @@ const changeP = async () => {
       message: res.data.message,
       type: res.data.status === 0 ? "success" : "error",
     });
+    if (res.data.status === 0) {
+      state.changePasswordDialog = false;
+      router.push("/login");
+    }
   } else {
     ElMessage({
       showClose: true,
-      message: "两次输入的密码不一致",
+      message: "请检查输入的数据",
       type: "error",
     });
   }
 };
-const openChangePasswordDialog = () =>{
+const openChangePasswordDialog = () => {
   state.changePasswordDialog = true;
-}
+};
 //暴露打开弹窗的方法
 defineExpose({
   openChangePasswordDialog,

@@ -35,7 +35,6 @@ const openDialog = () => {
 //登录
 const goLogin = async () => {
   const res = await login(loginData);
-  console.log("res---", res);
   const { token } = res.data;
   ElMessage({
     showClose: true,
@@ -45,8 +44,9 @@ const goLogin = async () => {
   if (res.data.status === 0) {
     //登录成功后获取id
     const { id } = res.data.results;
-    //token存到浏览器缓存
+    //token、id存到浏览器缓存
     localStorage.setItem("token", token);
+    localStorage.setItem("id", id);
     //根据id获取用户信息
     store.userInfo(id);
     //登录成功跳转到首页
@@ -168,7 +168,7 @@ const goRegister = async () => {
         <div class="footer-wrapped-contant">
           <div class="footer-wrapped-contant-title">
             <span>Vue3</span>
-            <span>MySQL</span>
+            <span>Node</span>
             <span>Typescript</span>
             <span>Animate</span>
             <span>Vite</span>
