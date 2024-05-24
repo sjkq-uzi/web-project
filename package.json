@@ -13,10 +13,13 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",
+    "@vue-office/excel": "^1.7.8",
     "animate.css": "^4.1.1",
     "axios": "^1.6.8",
+    "dropzone": "^5.9.3",
     "echarts": "^5.5.0",
     "element-plus": "^2.4.4",
+    "exceljs": "^4.4.0",
     "fast-glob": "^3.3.2",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
@@ -27,6 +30,7 @@
     "three": "^0.160.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue": "^3.4.21",
+    "vue-demi": "^0.14.6",
     "vue-qrcode": "^2.2.2",
     "vue-router": "^4.3.0",
     "vue3-qrcode": "^0.0.2"

@@ -50,18 +50,7 @@ const logOut = () => {
               <el-menu-item index="3-4">用户列表</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
-          <el-sub-menu index="4">
-            <template #title>
-              <el-icon><ShoppingBag /></el-icon>
-              <span>设备管理</span>
-            </template>
-            <el-menu-item-group title="模板管理">
-              <el-menu-item index="templateManage">模板管理</el-menu-item>
-            </el-menu-item-group>
-            <el-menu-item-group title="配置管理">
-              <el-menu-item index="4-2">配置管理</el-menu-item>
-            </el-menu-item-group>
-          </el-sub-menu>
+
           <el-sub-menu index="5">
             <template #title>
               <el-icon><ChromeFilled /></el-icon>
@@ -82,6 +71,16 @@ const logOut = () => {
             <el-icon><icon-menu /></el-icon>
             <span>登录日志</span>
           </el-menu-item>
+          <el-sub-menu index="4">
+            <template #title>
+              <el-icon><ShoppingBag /></el-icon>
+              <span>系统工具</span>
+            </template>
+            <el-menu-item index="fileUpload">文件转换</el-menu-item>
+            <el-menu-item-group title="配置管理">
+              <el-menu-item index="4-2">配置管理</el-menu-item>
+            </el-menu-item-group>
+          </el-sub-menu>
           <el-menu-item index="set">
             <el-icon><tools /></el-icon>
             <span>系统设置</span>

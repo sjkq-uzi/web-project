@@ -27,9 +27,9 @@ const routes = [
         component: () => import("@/views/set/index.vue"),
       },
       {
-        name: "templateManage",
-        path: "/templateManage",
-        component: () => import("@/views/templateManage/index.vue"),
+        name: "fileUpload",
+        path: "/fileUpload",
+        component: () => import("@/views/fileUpload/index.vue"),
       },
     ],
   },

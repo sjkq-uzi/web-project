@@ -134,13 +134,23 @@ onBeforeUnmount(() => {
         <div class="card-header">
           Electron
           <a
-            href="web-project\Electron\out\electron-win32-x64.zip"
-            download="electron-win32-x64.zip"
+            href="https://www.electronjs.org/zh/docs/latest/"
+            target="_blank"
+            rel="noopener noreferrer"
             >（中文文档）</a
+          >
+          <a href="\electron-win32-x64.zip" download="electron-win32-x64.zip"
+            >点击下载demo</a
           >
         </div>
       </template>
-      <div></div>
+      <div class="electron-content">
+        Electron是一个使用 JavaScript、HTML 和 CSS 构建桌面应用程序的框架。 嵌入
+        Chromium 和 Node.js 到 二进制的 Electron 允许您保持一个 JavaScript
+        代码代码库并创建 在Windows上运行的跨平台应用
+        macOS和Linux——不需要本地开发经验。
+        <img src="@/assets//home/homeBgE.png" style="padding-top: 20%" />
+      </div>
     </el-card>
   </div>
 </template>
@@ -170,6 +180,16 @@ onBeforeUnmount(() => {
   .echart-content {
     height: auto;
     width: 100%;
+  }
+  .electron-content {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-family: "Brush Script MT", cursive; /* 使用艺术字体 */
+    color: #111111; /* 文字颜色 */
+    text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.2),
+      /* 阴影效果 */ 6px 6px 0px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease; /* 过渡效果 */
   }
 }
 </style>
