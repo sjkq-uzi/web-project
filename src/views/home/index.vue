@@ -121,7 +121,7 @@ onBeforeUnmount(() => {
       </template>
       <div>
         <iframe
-          src="http://localhost:5173/"
+          src="http://8.135.36.9:8088/"
           width="100%"
           height="400px"
           frameborder="0"

@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
-import { resolve } from 'path';
+import { resolve } from "path";
 import requireTransform from "vite-plugin-require-transform";
 
 import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
@@ -9,6 +9,7 @@ import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 export default defineConfig({
   plugins: [
     vue(),
+    
     createSvgIconsPlugin({
       iconDirs: [resolve(process.cwd(), "src/assets/svg")],
       symbolId: "icon-[dir]-[name]",
@@ -17,7 +18,7 @@ export default defineConfig({
       fileRegex: /.js$|.vue$/,
     }),
   ],
-  assetsInclude: ['**/*.glb'],
+  assetsInclude: ["**/*.glb"],
   pluginOptions: {
     "style-resources-loader": {
       preProcessor: "scss",
@@ -25,13 +26,14 @@ export default defineConfig({
     },
   },
   server: {
-    port: 8080,
+    port: 8081,
     open: true,
     cors: true,
+    host: true,
   },
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src"),
+      "@": path.resolve(__dirname, "src")
     },
   },
 });

@@ -2,8 +2,7 @@ import axios from "axios";
 
 const instance = axios.create({
   //后端url地址
-  baseURL: "http://127.0.0.1:3007",
-  timeout: 6000,
+  baseURL: "http://172.28.4.75:3007",
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
 });
 
@@ -23,6 +22,7 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   function (response) {
     // 对响应数据做点什么
+    console.log("response=", response);
     return response;
   },
   function (error) {

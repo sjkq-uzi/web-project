@@ -67,17 +67,11 @@ const goRegister = async () => {
         type: "success",
       });
       activeName.value = "first";
-    } else if (res.data.code === 500) {
-      //注册失败,数据库报错
-      ElMessage.error(res.data.message);
-    } else if (res.data.code === 400) {
-      //账号或密码不能为空
-      ElMessage.warning(res.data.message);
-    } else if (res.data.code === 409) {
-      //账号已存在
-      ElMessage.warning(res.data.message);
     } else {
-      ElMessage.error("注册账号失败");
+      //500注册失败,数据库报错
+      //400账号或密码不能为空
+      //409账号已存在
+      ElMessage.error(res.data.message);
     }
   } else {
     ElMessage.error("两次密码输入不一致");
@@ -90,7 +84,7 @@ const goRegister = async () => {
     <el-container>
       <el-header class="header-wrapped">
         <div class="header-wrapped-contant">
-          <h3 class="animate__animated animate__bounceInRight">后台管理系统</h3>
+          <h3 class="animate__animated animate__bounceInRight">世界空气</h3>
           <span
             class="header-wrapped-contant-welcome animate__animated animate__wobble"
             >欢迎您的登录</span

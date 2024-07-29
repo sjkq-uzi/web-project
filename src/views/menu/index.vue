@@ -32,10 +32,18 @@ const logOut = () => {
             <el-icon><House /></el-icon>
             <span>首页</span>
           </el-menu-item>
-          <el-menu-item index="2">
-            <el-icon><Document /></el-icon>
-            <span>系统概览</span>
-          </el-menu-item>
+          <el-sub-menu>
+            <template #title>
+              <el-icon><ChromeFilled /></el-icon>
+              <span>AI工具</span>
+            </template>
+            <el-menu-item-group title="ai小助手">
+              <el-menu-item index="gptChat">豆沙包</el-menu-item>
+            </el-menu-item-group>
+            <el-menu-item-group title="根据描述生成图片">
+              <el-menu-item index="gptDraw">神笔马良</el-menu-item>
+            </el-menu-item-group>
+          </el-sub-menu>
           <el-sub-menu index="3">
             <template #title>
               <el-icon><User /></el-icon>
@@ -63,9 +71,9 @@ const logOut = () => {
               <el-menu-item index="5-2">回收站</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
-          <el-menu-item index="7">
+          <el-menu-item index="chatRoom">
             <el-icon><icon-menu /></el-icon>
-            <span>操作日志</span>
+            <span>聊天室</span>
           </el-menu-item>
           <el-menu-item index="8">
             <el-icon><icon-menu /></el-icon>

@@ -5,7 +5,7 @@ import { ref, onMounted, watch } from "vue";
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
 //引入VueOfficeExcel组件
-import VueOfficeExcel from "@vue-office/excel";
+import * as VueOfficeExcel from "@vue-office/excel";
 //引入相关样式
 import "@vue-office/excel/lib/index.css";
 const item = ref([{ name: "文件转换", iconName: "location" }]);
@@ -22,13 +22,14 @@ onMounted(() => {
   Dropzone.autoDiscover = false;
   //初始化Dropzone实例处理文件上传
   let myDropzone = new Dropzone(dom, {
-    url: "http://127.0.0.1:3007/utils/fileUpload",
+    url: "http://8.135.36.9/utils/fileUpload",
     method: "post",
     paramName: "file",
     maxFilesize: 10, // MB
     maxFiles: 1,
     addRemoveLinks: true,
     acceptedFiles: ".xlsx,.js",
+    headers: [{ "L-custom-header": "js-xlsx" }],
     dictMaxFilesExceeded: "您只能上传一个文件。", // 超过文件数限制时的提示信息
   });
   //文件上传成功时
@@ -67,7 +68,7 @@ onMounted(() => {
   <div class="wrapped-content">
     <div
       id="dropzone-file-upload"
-      action="http://127.0.0.1:3007/utils/fileUpload"
+      action="http://8.135.36.9/utils/fileUpload"
       method="post"
     >
       <div v-if="isUpload">

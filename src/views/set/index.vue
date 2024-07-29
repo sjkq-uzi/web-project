@@ -127,7 +127,7 @@ const onClick = async (item: itemData) => {
               <!-- action是上传头像接口 -->
               <el-upload
                 class="avatar-uploader"
-                action="http://127.0.0.1:3007/users/uploadAvatar"
+                action="http://8.135.36.9/users/uploadAvatar"
                 :show-file-list="false"
                 :on-success="handleAvatarSuccess"
                 :before-upload="beforeAvatarUpload"

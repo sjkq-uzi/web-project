@@ -14,8 +14,6 @@ import zhCn from "element-plus/dist/locale/zh-cn.mjs";
 // 导入svg图标
 import "virtual:svg-icons-register";
 import * as ElementPlusIconsVue from "@element-plus/icons-vue";
-//二维码第三方库
-import VueQrcode from "vue-qrcode";
 //导入pinia
 import pinia from "./store";
 // 创建app实例
@@ -30,8 +28,6 @@ app.use(router);
 app.use(ElementPlus, { locale: zhCn });
 // 使用pinia
 app.use(pinia);
-//注册全局组件
-app.component("vue-qrcode", VueQrcode);
-// app.config.globalProperties.$pinia = pinia;
+
 // 挂载app
 app.mount("#app");

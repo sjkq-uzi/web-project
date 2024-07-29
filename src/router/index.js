@@ -31,6 +31,21 @@ const routes = [
         path: "/fileUpload",
         component: () => import("@/views/fileUpload/index.vue"),
       },
+      {
+        name: "gptChat",
+        path: "/gptChat",
+        component: () => import("@/views/gptChat/index.vue"),
+      },
+      {
+        name: "gptDraw",
+        path: "/gptDraw",
+        component: () => import("@/views/gptChat/gptDraw.vue"),
+      },
+      {
+        name: "chatRoom",
+        path: "/chatRoom",
+        component: () => import("@/views/chatRoom/index.vue"),
+      },
     ],
   },
 ];
